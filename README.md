@@ -14,4 +14,5 @@ AJAX偵測資料庫更新
         * lxml==3.7.3
         * Django==1.11.4
         * djangorestframework==3.7.7
-        
+        
+於ubuntu 16.04 LTS上測試通過
