@@ -6,14 +6,14 @@ import requests
 from lxml import html
 import cssselect
 
-config = configparser.ConfigParser()
-config.read("./config.ini")
-redis_server = config['redis']
+# config = configparser.ConfigParser()
+# config.read("./config.ini")
+# redis_server = config['redis']
 
 app = Celery('celery_test',
-             broker='redis://{}:{}'.format(redis_server['host'],
-                                           redis_server['port']))
-app.config_from_object('cron.celeryconfig')
+             broker='redis://localhost:6379')
+# app.config_from_object('cron.celeryconfig')
+
 
 @app.task
 def crawl_superstar():
@@ -29,8 +29,17 @@ def crawl_superstar():
         print(title)
         url = "https://nba.udn.com" + new.cssselect('a')[0].attrib['href']
         print(url)
-        c.execute("INSERT OR IGNORE INTO news_news (title, url) VALUES (
-                  '{}', '{}')".format(title, url))
+        c.execute("""INSERT OR IGNORE INTO news_news (title, url)
+                  VALUES ('{}', '{}')""".format(title, url))
 
+    conn.commit()
+    conn.close()
+
+
+@app.task
+def truncate():
+    conn = sqlite3.connect("../superstar/db.sqlite3")
+    c = conn.cursor()
+    c.execute("DELETE FROM news_news")
     conn.commit()
     conn.close()
