@@ -29,8 +29,8 @@ def crawl_superstar():
         print(title)
         url = "https://nba.udn.com" + new.cssselect('a')[0].attrib['href']
         print(url)
-        c.execute("INSERT INTO news_news (title, url) VALUES ('{}', '{}')"
-                  .format(title, url))
+        c.execute("INSERT OR IGNORE INTO news_news (title, url) VALUES (
+                  '{}', '{}')".format(title, url))
 
     conn.commit()
     conn.close()

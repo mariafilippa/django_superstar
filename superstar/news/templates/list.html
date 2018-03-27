@@ -99,17 +99,6 @@
     </script>
     <script>
       var article_num;
-      function getCount(){
-        $.ajax({
-          type: 'GET',
-          url: '/count/',
-          dataType: 'json'
-        }).done(function(data) {
-            article_num = data.count;
-            //alert(article_num)
-          });
-      };
-      setTimeout(getCount, 100);
       function worker() {
         $.ajax({
           type: 'GET',
@@ -120,8 +109,9 @@
             if(data.count > article_num) {
               $('#alert span').text('有更新，請刷新頁面！');
               $('#alert').removeClass('d-none');
-              article_num = data.count;
             };
+            article_num = data.count;
+            alert(article_num)
             setTimeout(worker, 5000);
           });
       };
