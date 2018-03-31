@@ -2,6 +2,9 @@ import requests
 from lxml import html
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
+from django.db.models.signals import post_save
+from django.dispatch import receiver
+from django.core.mail import send_mail
 from rest_framework import viewsets
 from rest_framework.response import Response
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -28,5 +31,22 @@ class NewsViewSet(viewsets.ReadOnlyModelViewSet):
         # print(content)
         return JsonResponse({'title': news.title, 'page': content})
 
+
 def article_num(request):
     return JsonResponse({'count': News.objects.count()})
+
+
+def save_news(request):
+    news = News(title="test_3", url="http://www.test.com/3")
+    news.save()
+    return JsonResponse({"message": "saved"})
+
+
+@receiver(post_save, sender=News)
+def print_receiver(sender, **kwargs):
+    print("Received signal!")
+    send_mail("Django Mail",
+              "Message",
+              "non_exist@msn.com",
+              ["emmalover@gmail.com"],
+              )

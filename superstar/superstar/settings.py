@@ -27,6 +27,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'emmalover@gmail.com'
+EMAIL_HOST_PASSWORD = 'mariafilippa2'
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 # Application definition
 
