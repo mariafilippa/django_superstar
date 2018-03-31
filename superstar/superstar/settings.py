@@ -32,7 +32,7 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'emmalover@gmail.com'
 EMAIL_HOST_PASSWORD = 'mariafilippa2'
-DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+DEFAULT_FROM_EMAIL = 'non_exist@msn.com'
 
 # Application definition
 
